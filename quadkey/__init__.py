@@ -1,5 +1,5 @@
-from util import precondition
-from tile_system import TileSystem, valid_key
+from .util import precondition
+from .tile_system import TileSystem, valid_key
 
 LAT_STR = 'lat'
 LON_STR = 'lon'
@@ -27,7 +27,7 @@ class QuadKey:
         perms = [(-1, -1), (-1, 0), (-1, 1), (0, -1),
                  (0, 1), (1, -1), (1, 0), (1, 1)]
         tiles = set(
-            map(lambda perm: (abs(tile[0] + perm[0]), abs(tile[1] + perm[1])), perms))
+            [(abs(tile[0] + perm[0]), abs(tile[1] + perm[1])) for perm in perms])
         return [TileSystem.tile_to_quadkey(tile, level) for tile in tiles]
 
     def is_ancestor(self, node):
@@ -85,7 +85,7 @@ class QuadKey:
     def unwind(self):
         """ Get a list of all ancestors in descending order of level, including a new instance  of self
         """
-        return [ QuadKey(self.key[:l+1]) for l in reversed(range(len(self.key))) ]
+        return [ QuadKey(self.key[:l+1]) for l in reversed(list(range(len(self.key)))) ]
 
     def to_tile(self):
         return TileSystem.quadkey_to_tile(self.key)

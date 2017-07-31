@@ -28,7 +28,7 @@ class QuadkeyTest(TestCase):
         qk = quadkey.from_str('0')
         self.assertEqual(
             [c.key for c in qk.children()], ['00', '01', '02', '03'])
-        qk = quadkey.from_str(''.join(['0' for x in xrange(23)]))
+        qk = quadkey.from_str(''.join(['0' for x in range(23)]))
         self.assertEqual(qk.children(), [])
 
     def testAncestry(self):
